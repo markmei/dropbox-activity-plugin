@@ -1,4 +1,4 @@
-package at.testingtest.dropboxactivityplugin;
+package at.markmei.xeneo.plugin;
 
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
@@ -7,15 +7,21 @@ import com.sun.syndication.io.XmlReader;
 import java.net.URL;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
+import org.xeneo.core.plugin.AbstractActivityPlugin;
+import org.xeneo.core.plugin.PluginConfiguration;
+
 /*
- *
- * It Reads and prints any RSS/Atom feed type. <p>
- *
- * @author Alejandro Abdelnur
+ * @author Markus Meingassner
  *
  */
 
-public class App {
+public class DropboxActivityPlugin extends AbstractActivityPlugin {
+    
+    private String folder;
+    private String url;
+    
 
     public static void main(String[] args) throws Exception {
         URL url = new URL("https://www.dropbox.com/13081712/20374930/96070ae/events.xml");
@@ -39,7 +45,7 @@ public class App {
         }
     }
 
-    private static void activities(String input) {
+    public List<Activity> getActivities(String input) {
         String document = input.substring(1);
         String action = "";
         String actor = "";
@@ -167,5 +173,28 @@ public class App {
         System.out.println("Target Type: " + targetType);
         System.out.println("Target: " + target);
         System.out.println("Target URI: " + targetURI);
+    }
+
+    public void init() {
+        
+        PluginConfiguration pc = this.getPluginConfiguration();
+        Properties ps = pc.getProperties();
+        
+        if (ps.containsKey("folder")) {
+            folder = ps.getProperty("folder");
+        }
+        
+        if (ps.containsKey("url")) {
+            url = ps.getProperty("url");
+        }        
+        
+    }
+
+    public void run() {
+        
+        
+        
+        
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
