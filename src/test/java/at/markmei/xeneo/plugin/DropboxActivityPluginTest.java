@@ -4,8 +4,19 @@
  */
 package at.markmei.xeneo.plugin;
 
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.FeedException;
+import com.sun.syndication.io.SyndFeedInput;
+import com.sun.syndication.io.XmlReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.xeneo.core.plugin.PluginConfiguration;
@@ -36,8 +47,8 @@ public class DropboxActivityPluginTest {
         PluginConfiguration pc = new PluginConfiguration();
         
         Properties ps = new Properties();
-        ps.setProperty("url", "https://www.dropbox.com/13081712/20374930/96070ae/events.xml");
-        ps.setProperty("folder", "xeneo");
+        ps.setProperty("url", "C:/Users/XENEO/Documents/NetBeansProjects/DropboxActivityPlugin/src/test/resources/testDropboxActivities.xml");
+        //ps.setProperty("folder", "xeneo");
         
         pc.setProperties(ps);
         
@@ -52,10 +63,50 @@ public class DropboxActivityPluginTest {
 
     @Test
     public void testGetActivities() {
-    
-        List<Activity> acts = dap.getActivities("");
+        try {
+            List<Activity> acts = dap.getActivities();
+            
+            assertTrue(true);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DropboxActivityPluginTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(DropboxActivityPluginTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FeedException ex) {
+            Logger.getLogger(DropboxActivityPluginTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DropboxActivityPluginTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        assertTrue(true);
+    }
+    
+    @Test
+    public void testAssembleActivity() throws FileNotFoundException, IOException, IllegalArgumentException, FeedException {
+        
+        FileInputStream fis = new FileInputStream("C:/Users/XENEO/Documents/NetBeansProjects/DropboxActivityPlugin/src/test/resources/testDropboxActivities.xml");
+
+        SyndFeedInput input = new SyndFeedInput();
+        SyndFeed sf = input.build(new XmlReader(fis));
+        List entries = sf.getEntries();
+        Iterator it = entries.iterator();
+        while (it.hasNext()) {
+            SyndEntry se = (SyndEntry) it.next();
+            Activity a = dap.assembleActivity(se);
+            assertEquals(a.getCreationDate(),"Mon Apr 30 11:08:35 CEST 2012");
+            assertEquals(a.getActivityURI(),"DROPBOX_DFC922733D30EDEB008B59422A446A2D");
+            assertEquals(a.getActionURI(),"LEAVE");
+            assertEquals(a.getActorURI(),"John Connor");
+            assertEquals(a.getDescription(),"John Connor LEAVE XENEOTEST");
+            assertEquals(a.getObject(),"XENEOTEST");
+            assertEquals(a.getTarget(),"");
+            assertEquals(a.getSummary(),"");
+            return;
+        }
+        
+        
+        
+        
+        
+        
         
     }
 }

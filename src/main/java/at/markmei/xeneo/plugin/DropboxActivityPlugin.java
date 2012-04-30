@@ -2,13 +2,20 @@ package at.markmei.xeneo.plugin;
 
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
-import java.net.URL;
-import java.util.Date;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.xeneo.core.activity.Activity;
+import org.xeneo.core.activity.Object;
 import org.xeneo.core.plugin.AbstractActivityPlugin;
 import org.xeneo.core.plugin.PluginConfiguration;
 
@@ -16,37 +23,79 @@ import org.xeneo.core.plugin.PluginConfiguration;
  * @author Markus Meingassner
  *
  */
-
 public class DropboxActivityPlugin extends AbstractActivityPlugin {
-    
+
     private String folder;
     private String url;
+    private String activityUri;
+
     
+    public void init() {
 
-    public static void main(String[] args) throws Exception {
-        URL url = new URL("https://www.dropbox.com/13081712/20374930/96070ae/events.xml");
+        PluginConfiguration pc = this.getPluginConfiguration();
+        Properties ps = pc.getProperties();
 
-        XmlReader reader = null;
-        try {
-            reader = new XmlReader(url);
-            SyndFeed feed = new SyndFeedInput().build(reader);
-            for (Iterator i = feed.getEntries().iterator(); i.hasNext();) {
-                SyndEntry entry = (SyndEntry) i.next();
-                //Set Time
-                Date time = entry.getPublishedDate();
-                System.out.println("\nTime: " + time);
-                //Get Activities
-                activities(entry.getDescription().getValue().toString());
-            }
-        } finally {
-            if (reader != null) {
-                reader.close();
-            }
+        ps.setProperty("url", "C:/Users/XENEO/Documents/NetBeansProjects/DropboxActivityPlugin/src/test/resources/testDropboxActivities.xml");
+
+        if (ps.containsKey("folder")) {
+            folder = ps.getProperty("folder");
         }
+
+        if (ps.containsKey("url")) {
+                url = ps.getProperty("url");
+        }
+
     }
 
-    public List<Activity> getActivities(String input) {
-        String document = input.substring(1);
+   
+    public void run() {
+        try {
+            List<Activity> acts = getActivities();
+
+            Iterator<Activity> it = acts.iterator();
+            while (it.hasNext()) {
+                Activity a = it.next();
+                if (!true) {
+                    addActivity(a);
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DropboxActivityPlugin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(DropboxActivityPlugin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FeedException ex) {
+            Logger.getLogger(DropboxActivityPlugin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DropboxActivityPlugin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public List<Activity> getActivities() throws FileNotFoundException, IllegalArgumentException, FeedException, IOException {
+
+        List<Activity> acts = new ArrayList<Activity>();
+
+        FileInputStream fis = new FileInputStream(url);
+
+        SyndFeedInput input = new SyndFeedInput();
+        SyndFeed sf = input.build(new XmlReader(fis));
+        List entries = sf.getEntries();
+        Iterator it = entries.iterator();
+        while (it.hasNext()) {
+            SyndEntry entry = (SyndEntry) it.next();
+            assembleActivity(entry);
+        }
+
+        return acts;
+
+    }
+
+    public Activity assembleActivity(SyndEntry se) {
+        Activity a = new Activity();
+        a.setActivityURI(se.getUri());
+        a.setCreationDate(se.getUpdatedDate());
+        String document = se.getDescription().getValue().substring(1);
+        String input = document;
         String action = "";
         String actor = "";
         String object = "";
@@ -55,8 +104,6 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
         String target = "";
         String targetURI = "http://www.dropbox.com";
         String targetType = "Folder";
-
-        // delete, add, rename, remove, move folders or files
         if (document.startsWith("In") == true) {
             //set targetURI
             String input_new = document.substring(12);
@@ -165,36 +212,21 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
                 targetType = "not available";
             }
         }
-        System.out.println("Actor: " + actor);
-        System.out.println("Action: " + action);
-        System.out.println("Object Type: " + objectType);
-        System.out.println("Object: " + object);
-        System.out.println("Object URI: " + objectURI);
-        System.out.println("Target Type: " + targetType);
-        System.out.println("Target: " + target);
-        System.out.println("Target URI: " + targetURI);
-    }
+        Object o = new Object();
+        Object t = new Object();
+        o.setObjectName(object);
+        o.setObjectTypeURI(objectType);
+        o.setObjectURI(objectURI);
+        t.setObjectName(target);
+        t.setObjectTypeURI(targetType);
+        t.setObjectURI(targetURI);
+        a.setActionURI(action);
+        a.setActorURI(actor);
+        a.setDescription(actor + " " + action + " " + object +" "+" " +target);
+        a.setObject(o);
+        a.setTarget(t);
 
-    public void init() {
         
-        PluginConfiguration pc = this.getPluginConfiguration();
-        Properties ps = pc.getProperties();
-        
-        if (ps.containsKey("folder")) {
-            folder = ps.getProperty("folder");
-        }
-        
-        if (ps.containsKey("url")) {
-            url = ps.getProperty("url");
-        }        
-        
-    }
-
-    public void run() {
-        
-        
-        
-        
-        throw new UnsupportedOperationException("Not supported yet.");
+        return a;
     }
 }
