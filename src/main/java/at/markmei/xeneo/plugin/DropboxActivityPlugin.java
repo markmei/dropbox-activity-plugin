@@ -29,25 +29,23 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
     private String url;
     private String activityUri;
 
-    
     public void init() {
 
         PluginConfiguration pc = this.getPluginConfiguration();
         Properties ps = pc.getProperties();
 
-        ps.setProperty("url", "C:/Users/XENEO/Documents/NetBeansProjects/DropboxActivityPlugin/src/test/resources/testDropboxActivities.xml");
+        //ps.setProperty("url", "C:/Users/XENEO/Documents/NetBeansProjects/DropboxActivityPlugin/src/test/resources/testDropboxActivities.xml");
 
         if (ps.containsKey("folder")) {
             folder = ps.getProperty("folder");
         }
 
         if (ps.containsKey("url")) {
-                url = ps.getProperty("url");
+            url = ps.getProperty("url");
         }
 
     }
 
-   
     public void run() {
         try {
             List<Activity> acts = getActivities();
@@ -68,7 +66,6 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
         } catch (IOException ex) {
             Logger.getLogger(DropboxActivityPlugin.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public List<Activity> getActivities() throws FileNotFoundException, IllegalArgumentException, FeedException, IOException {
@@ -93,13 +90,13 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
     public Activity assembleActivity(SyndEntry se) {
         Activity a = new Activity();
         a.setActivityURI(se.getUri());
-        a.setCreationDate(se.getUpdatedDate());
+        a.setCreationDate(se.getPublishedDate());
         String document = se.getDescription().getValue().substring(1);
         String input = document;
         String action = "";
         String actor = "";
         String object = "";
-        String objectURI = "http://www.drobox.com";
+        String objectURI = "http://www.dropbox.com";
         String objectType = "";
         String target = "";
         String targetURI = "http://www.dropbox.com";
@@ -140,8 +137,8 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
             //set object uri and object type
             input_target = document.substring(document.indexOf('\'') + 1);
             objectURI = objectURI.concat(input_target.substring(0, input_target.indexOf('\'')));
-            if (objectURI.startsWith("http://www.drobox.comhttps")) {
-                objectURI = objectURI.substring(21);
+            if (objectURI.startsWith("http://www.dropbox.comhttps")) {
+                objectURI = objectURI.substring(22);
                 objectType = "Document";
             } else {
                 objectType = "Folder";
@@ -154,7 +151,7 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
             object = input_target.substring(0, targetendindex);
 
             //set more than one Object
-            if (input_target.indexOf("&#47;") > -1) {
+            if (document.indexOf("a href='") != -1) {
                 objectType = objectType.concat("s");
                 targetendindex = input_target.indexOf('\'');
                 object = input_target.substring(input_target.indexOf("&#47;") + 5, targetendindex);
@@ -164,13 +161,13 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
             }
             //end if - join folder or invite to folder or leave folder
         } else {
-            //set Actor and Verb
+            //set Actor and Action
             int index = 0;
             while ((document.startsWith("left") | document.startsWith("joined") | document.startsWith("invited")) == false) {
                 index++;
                 document = input.substring(index);
             }
-            actor = input.substring(1, index - 1);
+            actor = input.substring(0, index - 1);
             if (document.startsWith("invited") == true) {
                 //set action
                 action = "INVITE";
@@ -188,7 +185,7 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
                 target = input.substring(input.indexOf('"') + 2, input.indexOf('\'') - 4);
 
                 //set target type
-                targetType = "folder";
+                targetType = "Folder";
 
             } else {
                 //set action JOIN or LEAVE
@@ -205,11 +202,14 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
 
                 //set Object
                 object = input.substring(input.indexOf('"') + 2, input.indexOf('\'') - 4);
-
+                
+                //Set ObjectType
+                objectType = "Folder";
+               
                 //no target
-                target = "not available";
-                targetURI = "not available";
-                targetType = "not available";
+                target = "";
+                targetURI = "";
+                targetType = "";
             }
         }
         Object o = new Object();
@@ -222,11 +222,12 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
         t.setObjectURI(targetURI);
         a.setActionURI(action);
         a.setActorURI(actor);
-        a.setDescription(actor + " " + action + " " + object +" "+" " +target);
+        a.setDescription(actor + " " + action + " " + object + " " + target);
         a.setObject(o);
         a.setTarget(t);
 
-        
+
         return a;
+
     }
 }
