@@ -47,7 +47,7 @@ public class DropboxActivityPluginTest {
         
         PluginProperty p = new PluginProperty();
         p.setName("feed-url");
-        p.setValue("testDropboxActivities.xml");
+        p.setValue("C:/Users/XENEO/Documents/NetBeansProjects/AP_Dropbox/src/test/resources/testDropboxActivities.xml");
    
         dap.setPluginConfiguration(pc);
         dap.init();

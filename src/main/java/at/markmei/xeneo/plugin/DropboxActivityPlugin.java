@@ -17,6 +17,7 @@ import org.xeneo.core.activity.Actor;
 import org.xeneo.core.activity.Object;
 import org.xeneo.core.plugin.PluginProperty;
 import org.xeneo.core.plugin.activity.AbstractActivityPlugin;
+import org.xeneo.core.plugin.PluginConfiguration;
 
 /*
  * @author Markus Meingassner
@@ -28,9 +29,12 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
         
     private String url;
     private String activityUri;
+    
+    
 
     public void init() {
-        PluginProperty[] pps = getPluginProperties();        
+        PluginConfiguration pc = new PluginConfiguration();
+        PluginProperty[] pps = pc.getProperties();   
         for (PluginProperty p : pps) {
             if (p.getName().equalsIgnoreCase("feed-url")) {
                 url = p.getValue();
@@ -41,7 +45,6 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
     public List<Activity> getActivities() {
         FileInputStream fis = null;
         List<Activity> acts = new ArrayList<Activity>();
-        
         try {
             
             fis = new FileInputStream(url);
@@ -212,7 +215,7 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
         a.setDescription(actor + " " + action + " " + object + " " + target);
         a.setObject(o);
         a.setTarget(t);
-
+        logger.info(a.getActivityURI());
 
         return a;
 
