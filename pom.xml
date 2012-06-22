@@ -1,37 +1,37 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>at.markusmeingassner</groupId>
-  <artifactId>DropboxActivityPlugin</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+    <groupId>at.markusmeingassner</groupId>
+    <artifactId>DropboxActivityPlugin</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-  <name>DropboxActivityPlugin</name>
-  <url>http://maven.apache.org</url>
+    <name>DropboxActivityPlugin</name>
+    <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.10</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>rome</groupId>
-        <artifactId>rome</artifactId>
-        <version>1.0</version>
-    </dependency>
-    <dependency>
-        <groupId>org.xeneo</groupId>
-        <artifactId>xeneo-core-api</artifactId>
-        <version>1.0-SNAPSHOT</version>
-      <scope>test</scope>
-      <type>jar</type>
-    </dependency>
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>rome</groupId>
+            <artifactId>rome</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.xeneo</groupId>
+            <artifactId>xeneo-core-api</artifactId>
+            <version>1.0-SNAPSHOT</version>      
+            <type>jar</type>
+        </dependency>
+    </dependencies>
 </project>
