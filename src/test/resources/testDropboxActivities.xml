@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+
+
+<rss version="2.0">
+<channel>
+<title>Dropbox event feed - Markus Meingassner</title>
+<link>http://www.dropbox.com</link>
+<description>Dropbox events for Markus Meingassner</description>
+<language>en</language>
+<lastBuildDate>Mon, 30 Apr 2012 09:20:02 GMT</lastBuildDate>
+<ttl>60</ttl>
+
+
+
+<item>
+<title>John Connor left the shared...</title>
+<link>http://www.dropbox.com/home</link>
+<pubDate>Mon, 30 Apr 2012 09:08:35 GMT</pubDate>
+<description><![CDATA[
+John Connor left the shared folder '<a href="/home/XENEOTEST">XENEOTEST</a>'
+<br/>
+]]></description>
+<guid isPermaLink="false">DROPBOX_DFC922733D30EDEB008B59422A446A2D</guid>
+</item>
+
+
+<item>
+<title>In XENEOTEST, John Connor ....</title>
+<link>http://www.dropbox.com/home</link>
+<pubDate>Mon, 30 Apr 2012 09:07:25 GMT</pubDate>
+<description><![CDATA[
+In <a href='/home/XENEOTEST'>XENEOTEST</a>, John Connor deleted the file <a href='https://dl-web.dropbox.com/get/XENEOTEST/drdrdrdrdrdrdrdr?w=db418234' title='&#47;XENEOTEST&#47;drdrdrdrdrdrdrdr'>drdrdrdrdrdrdrdr</a>.
+<br/>
+]]></description>
+<guid isPermaLink="false">DROPBOX_739BC65934B7B7C40747CE76371B0D22</guid>
+</item>
+
+
+<item>
+<title>In XENEOTEST, John Connor ....</title>
+<link>http://www.dropbox.com/home</link>
+<pubDate>Mon, 30 Apr 2012 09:07:22 GMT</pubDate>
+<description><![CDATA[
+In <a href='/home/XENEOTEST'>XENEOTEST</a>, John Connor deleted the folder <a href='/c/browse/asdfdfasdfasdf?ns_id=119834745' title='&#47;XENEOTEST&#47;asdfdfasdfasdf'>asdfdfasdfasdf</a>.
+<br/>
+]]></description>
+<guid isPermaLink="false">DROPBOX_A404B3C0E6ED88F46FB361793AF65D70</guid>
+</item>
+
+
+<item>
+<title>In XENEOTEST, John Connor ....</title>
+<link>http://www.dropbox.com/home</link>
+<pubDate>Mon, 30 Apr 2012 09:07:18 GMT</pubDate>
+<description><![CDATA[
+In <a href='/home/XENEOTEST'>XENEOTEST</a>, John Connor added the folder <a href='/c/browse/asdfdfasdfasdf?ns_id=119834745' title='&#47;XENEOTEST&#47;asdfdfasdfasdf'>asdfdfasdfasdf</a>.
+<br/>
+]]></description>
+<guid isPermaLink="false">DROPBOX_01A517743BC22D3B9E01140EBA8D1217</guid>
+</item>
+
+
+<item>
+<title>In XENEOTEST, John Connor ....</title>
+<link>http://www.dropbox.com/home</link>
+<pubDate>Mon, 30 Apr 2012 09:07:18 GMT</pubDate>
+<description><![CDATA[
+In <a href='/home/XENEOTEST'>XENEOTEST</a>, John Connor deleted the folder <a href='/c/browse/blalbla?ns_id=119834745' title='&#47;XENEOTEST&#47;blalbla'>blalbla</a>.
+<br/>
+]]></description>
+<guid isPermaLink="false">DROPBOX_67E267F1A0ED07037C46E3F2B83AD081</guid>
+</item>
+
+
+<item>
+<title>In XENEOTEST, John Connor ....</title>
+<link>http://www.dropbox.com/home</link>
+<pubDate>Mon, 30 Apr 2012 09:07:17 GMT</pubDate>
+<description><![CDATA[
+In <a href='/home/XENEOTEST'>XENEOTEST</a>, John Connor renamed the file <a href='https://dl-web.dropbox.com/get/XENEOTEST/drdrdrdrdrdrdrdr?w=db418234' title='&#47;XENEOTEST&#47;drdrdrdrdrdrdrdr'>drdrdrdrdrdrdrdr</a>.
+<br/>
+]]></description>
+<guid isPermaLink="false">DROPBOX_FAB9541F8C5205D2A78CA455FBECC18B</guid>
+</item>
+
+
+<item>
+<title>In XENEOTEST, John Connor ....</title>
+<link>http://www.dropbox.com/home</link>
+<pubDate>Mon, 30 Apr 2012 09:07:01 GMT</pubDate>
+<description><![CDATA[
+In <a href='/home/XENEOTEST'>XENEOTEST</a>, John Connor deleted <a href='https://dl-web.dropbox.com/get/XENEOTEST/oouth_description.odt?w=0600f681' title='&#47;XENEOTEST&#47;oouth_description.odt'>oouth_description.odt</a> and <a href='/events/119834745/226832284'>2 more files</a>.
+<br/>
+]]></description>
+<guid isPermaLink="false">DROPBOX_EE1F2603DCC20A794B237B1ACF111FE9</guid>
+</item>
+
+
+<item>
+<title>John Connor joined the shar...</title>
+<link>http://www.dropbox.com/home</link>
+<pubDate>Mon, 30 Apr 2012 09:05:40 GMT</pubDate>
+<description><![CDATA[
+John Connor joined the shared folder '<a href="/home/XENEOTEST">XENEOTEST</a>'
+<br/>
+]]></description>
+<guid isPermaLink="false">DROPBOX_65481590E4F6CF2A44B78DCA60CEFBF5</guid>
+</item>
+
+
+<item>
+<title>You invited mmeingassner@ya...</title>
+<link>http://www.dropbox.com/home</link>
+<pubDate>Mon, 30 Apr 2012 09:05:06 GMT</pubDate>
+<description><![CDATA[
+You invited mmeingassner@yahoo.de to the shared folder '<a href="/home/XENEOTEST">XENEOTEST</a>'
+<br/>
+]]></description>
+<guid isPermaLink="false">DROPBOX_DBEEFD33942A55CDE8F380C36DCCBCEB</guid>
+</item>
+
+
+<item>
+<title>In XENEOTEST, You added we....</title>
+<link>http://www.dropbox.com/home</link>
+<pubDate>Mon, 30 Apr 2012 09:04:16 GMT</pubDate>
+<description><![CDATA[
+In <a href='/home/XENEOTEST'>XENEOTEST</a>, You added <a href='https://dl-web.dropbox.com/get/XENEOTEST/week1.txt?w=6d4b657b' title='&#47;XENEOTEST&#47;week1.txt'>week1.txt</a> and <a href='/events/119834745/226831705'>2 more files</a>.
+<br/>
+]]></description>
+<guid isPermaLink="false">DROPBOX_E6E8AE5F2842448705737775EE56E8EE</guid>
+</item>
+
+
+<item>
+<title>In XENEOTEST, You added th....</title>
+<link>http://www.dropbox.com/home</link>
+<pubDate>Mon, 30 Apr 2012 09:03:43 GMT</pubDate>
+<description><![CDATA[
+In <a href='/home/XENEOTEST'>XENEOTEST</a>, You added the file <a href='https://dl-web.dropbox.com/get/XENEOTEST/images.jpg?w=b704dad4' title='&#47;XENEOTEST&#47;images.jpg'>images.jpg</a>.
+<br/>
+]]></description>
+<guid isPermaLink="false">DROPBOX_FC36F9B44B0F12026DFC1809A6927EA4</guid>
+</item>
+
+
+<item>
+<title>In XENEOTEST, You added th....</title>
+<link>http://www.dropbox.com/home</link>
+<pubDate>Mon, 30 Apr 2012 09:03:43 GMT</pubDate>
+<description><![CDATA[
+In <a href='/home/XENEOTEST'>XENEOTEST</a>, You added the folder <a href='/c/browse/blalbla?ns_id=119834745' title='&#47;XENEOTEST&#47;blalbla'>blalbla</a>.
+<br/>
+]]></description>
+<guid isPermaLink="false">DROPBOX_6FB0641D69B7B9D797D232EA4CCCB8BD</guid>
+</item>
+
+
+<item>
+<title>In XENEOTEST, You deleted ....</title>
+<link>http://www.dropbox.com/home</link>
+<pubDate>Mon, 30 Apr 2012 09:03:43 GMT</pubDate>
+<description><![CDATA[
+In <a href='/home/XENEOTEST'>XENEOTEST</a>, You deleted the folder <a href='/c/browse/Neuer%20Ordner?ns_id=119834745' title='&#47;XENEOTEST&#47;Neuer Ordner'>Neuer Ordner</a>.
+<br/>
+]]></description>
+<guid isPermaLink="false">DROPBOX_4D0A32739160564B3D1A60C6E9B174A0</guid>
+</item>
+
+</channel>
+</rss>
+
