@@ -6,18 +6,16 @@ import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xeneo.core.activity.Activity;
 import org.xeneo.core.activity.Actor;
 import org.xeneo.core.activity.Object;
-import org.xeneo.core.plugin.PluginConfiguration;
+import org.xeneo.core.plugin.PluginProperty;
 import org.xeneo.core.plugin.activity.AbstractActivityPlugin;
 
 /*
@@ -26,64 +24,47 @@ import org.xeneo.core.plugin.activity.AbstractActivityPlugin;
  */
 public class DropboxActivityPlugin extends AbstractActivityPlugin {
 
-    private String folder;
+    private static Logger logger = LoggerFactory.getLogger(DropboxActivityPlugin.class);
+        
     private String url;
     private String activityUri;
 
     public void init() {
-
-        PluginConfiguration pc = this.getPluginConfiguration();
-        Properties ps = pc.getInstanceProperties();
-
-        ps.setProperty("url", "C:/Users/XENEO/Documents/NetBeansProjects/AP_Dropbox/src/test/resources/testDropboxActivities.xml");
-
-        if (ps.containsKey("folder")) {
-            folder = ps.getProperty("folder");
-        }
-
-        if (ps.containsKey("url")) {
-            url = ps.getProperty("url");
-        }
-
-    }
-
-    public void run() {
-        try {
-            List<Activity> acts = getActivities();
-
-            Iterator<Activity> it = acts.iterator();
-            while (it.hasNext()) {
-                Activity a = it.next();
-                if (!true) {
-                    addActivity(a);
-                }
+        PluginProperty[] pps = getPluginProperties();        
+        for (PluginProperty p : pps) {
+            if (p.getName().equalsIgnoreCase("feed-url")) {
+                url = p.getValue();
             }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(DropboxActivityPlugin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(DropboxActivityPlugin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FeedException ex) {
-            Logger.getLogger(DropboxActivityPlugin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(DropboxActivityPlugin.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }    
 
-    public List<Activity> getActivities() throws FileNotFoundException, IllegalArgumentException, FeedException, IOException {
-
+    public List<Activity> getActivities() {
+        FileInputStream fis = null;
         List<Activity> acts = new ArrayList<Activity>();
-
-        FileInputStream fis = new FileInputStream(url);
-
-        SyndFeedInput input = new SyndFeedInput();
-        SyndFeed sf = input.build(new XmlReader(fis));
-        List entries = sf.getEntries();
-        Iterator it = entries.iterator();
-        while (it.hasNext()) {
-            SyndEntry entry = (SyndEntry) it.next();
-            assembleActivity(entry);
-        }
-
+        
+        try {
+            
+            fis = new FileInputStream(url);
+            
+            SyndFeedInput input = new SyndFeedInput();
+            SyndFeed sf = input.build(new XmlReader(fis));
+            List entries = sf.getEntries();
+            Iterator it = entries.iterator();
+            while (it.hasNext()) {
+                SyndEntry entry = (SyndEntry) it.next();
+                assembleActivity(entry);
+            }
+            
+            fis.close();
+            
+        } catch (IOException ex) {
+            logger.error("Stream with URL: "+ url +" is unloadable:" + ex.getMessage());
+        } catch (IllegalArgumentException ex) {
+            logger.error(ex.getMessage());
+        } catch (FeedException ex) {
+            logger.error(ex.getMessage());
+        } 
+        
         return acts;
 
     }

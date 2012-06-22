@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package at.markmei.xeneo.plugin;
 
 import com.sun.syndication.feed.synd.SyndEntry;
@@ -9,19 +6,17 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static org.junit.Assert.assertEquals;
 import org.junit.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xeneo.core.activity.Activity;
 import org.xeneo.core.plugin.PluginConfiguration;
-import org.xeneo.core.plugin.Plugin;
+import org.xeneo.core.plugin.PluginProperty;
 
 /**
  *
@@ -29,8 +24,11 @@ import org.xeneo.core.plugin.Plugin;
  */
 public class DropboxActivityPluginTest {
 
-    DropboxActivityPlugin dap = new DropboxActivityPlugin();
-
+    private static Logger logger = LoggerFactory.getLogger(DropboxActivityPluginTest.class);
+    
+    private DropboxActivityPlugin dap = new DropboxActivityPlugin();
+    
+    
     public DropboxActivityPluginTest() {
     }
 
@@ -46,13 +44,11 @@ public class DropboxActivityPluginTest {
     public void setUp() {
 
         PluginConfiguration pc = new PluginConfiguration();
-
-        Properties ps = new Properties();
-        //ps.setProperty("url", "C:/Users/XENEO/Documents/NetBeansProjects/DropboxActivityPlugin/src/test/resources/testDropboxActivities.xml");
-        //ps.setProperty("folder", "xeneo");
-
-        pc.setInstanceProperties(ps);
-
+        
+        PluginProperty p = new PluginProperty();
+        p.setName("feed-url");
+        p.setValue("testDropboxActivities.xml");
+   
         dap.setPluginConfiguration(pc);
         dap.init();
 
@@ -63,33 +59,14 @@ public class DropboxActivityPluginTest {
     }
 
     @Test
-    public void testGetActivities() {
-        try {
-            List<Activity> acts = dap.getActivities();
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(DropboxActivityPluginTest.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(DropboxActivityPluginTest.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FeedException ex) {
-            Logger.getLogger(DropboxActivityPluginTest.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(DropboxActivityPluginTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
-    }
-
-    @Test
     public void testAssembleActivity() throws FileNotFoundException, IOException, IllegalArgumentException, FeedException {
-
-        FileInputStream fis = new FileInputStream("C:/Users/XENEO/Documents/NetBeansProjects/AP_Dropbox/src/test/resources/testDropboxActivities.xml");
-
+        
         SyndFeedInput input = new SyndFeedInput();
-        SyndFeed sf = input.build(new XmlReader(fis));
+        SyndFeed sf = input.build(new XmlReader(DropboxActivityPluginTest.class.getResourceAsStream("/testDropboxActivities.xml")));
         List entries = sf.getEntries();
         Iterator it = entries.iterator();
 
+        
         //case 1: Actor leave Object - no target
         while (it.hasNext()) {
             SyndEntry se = (SyndEntry) it.next();
