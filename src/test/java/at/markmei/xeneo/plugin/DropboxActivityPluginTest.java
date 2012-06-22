@@ -57,6 +57,23 @@ public class DropboxActivityPluginTest {
     @After
     public void tearDown() {
     }
+    
+    @Test
+    public void testOnlineStream() {
+        String feed = "https://www.dropbox.com/12598161/19626820/79d57c3/events.xml";
+        
+        PluginConfiguration pc = new PluginConfiguration();
+        
+        PluginProperty p = new PluginProperty();
+        p.setName("feed-url");
+        p.setValue(feed);
+   
+        dap.setPluginConfiguration(pc);
+        dap.init();
+        
+        dap.run();
+        
+    }
 
     @Test
     public void testAssembleActivity() throws FileNotFoundException, IOException, IllegalArgumentException, FeedException {
