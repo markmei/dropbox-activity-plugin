@@ -9,19 +9,13 @@
     <packaging>jar</packaging>
 
     <name>DropboxActivityPlugin</name>
-    <url>http://maven.apache.org</url>
+    <url>https://github.com/markmei/dropbox-activity-plugin</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.10</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>rome</groupId>
             <artifactId>rome</artifactId>
@@ -30,8 +24,25 @@
         <dependency>
             <groupId>org.xeneo</groupId>
             <artifactId>xeneo-core-api</artifactId>
-            <version>1.0-SNAPSHOT</version>      
-            <type>jar</type>
+            <version>1.0-SNAPSHOT</version>                  
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.5</version>
+        </dependency>
+        
+        <!-- Test Dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.6.5</version>
         </dependency>
     </dependencies>
 </project>
