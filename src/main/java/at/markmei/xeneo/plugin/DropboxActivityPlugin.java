@@ -52,7 +52,7 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
         logger.info("Dropbox Activity Plugin tries to retrive Activities...");         
 
         try {
-            URL feed = new URL(url);            
+            URL feed = new URL(url);
             
             SyndFeedInput input = new SyndFeedInput();
             SyndFeed sf = input.build(new XmlReader(feed));
@@ -105,20 +105,20 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
             document = input_target.substring(input_target.indexOf(',') + 2);
             input_target = document;
             targetendindex = 0;
-            while ((document.startsWith("deleted") | document.startsWith("added") | document.startsWith("renamed") | document.startsWith("removed") | document.startsWith("moved")) == false) {
+            while ((document.startsWith("deleted") | document.startsWith("added") | document.startsWith("renamed") | document.startsWith("removed") | document.startsWith("moved") | document.startsWith("edited")) == false) {
                 targetendindex++;
                 document = input_target.substring(targetendindex);
             }
             actor = input_target.substring(0, targetendindex - 1);
 
-            //set actor
+            //set action
             if (document.startsWith("deleted") | document.startsWith("removed")) {
                 action = "DELETE";
             }
             if (document.startsWith("added")) {
                 action = "ADD";
             }
-            if (document.startsWith("moved") | document.startsWith("renamed")) {
+            if (document.startsWith("moved") | document.startsWith("renamed") | document.startsWith("edited")) {
                 action = "UPDATE";
             }
 
@@ -152,10 +152,16 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
         } else {
             //set Actor and Action
             int index = 0;
-            while ((document.startsWith("left") | document.startsWith("joined") | document.startsWith("invited")) == false) {
+            while ((document.startsWith("left") | document.startsWith("joined") | document.startsWith("invited") | document.startsWith("added")) == false) {
                 index++;
+                
                 document = input.substring(index);
+                //check for useless Dropbox announcments
+                if(index >40 == true){
+                    return null;}
             }
+            
+            
             actor = input.substring(0, index - 1);
             if (document.startsWith("invited") == true) {
                 //set action
@@ -176,7 +182,9 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
                 //set target type
                 targetType = "Folder";
 
-            } else {
+            } 
+            if ((document.startsWith("joined") | document.startsWith("left")) == true)
+            {
                 //set action JOIN or LEAVE
                 if (document.startsWith("joined")) {
                     action = "JOIN";
@@ -200,6 +208,40 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
                 targetURI = "";
                 targetType = "";
             }
+            if (document.startsWith("added")){
+                //set object uri and object type
+                action = "ADD";
+            input = document.substring(document.indexOf('\'') + 1);
+            objectURI = objectURI.concat(input.substring(0, input.indexOf('\'')));
+            if (objectURI.startsWith("http://www.dropbox.comhttps")) {
+                objectURI = objectURI.substring(22);
+                objectType = "File";
+            } else {
+                objectType = "Folder";
+            }
+
+            //set ONE object
+            document = input.substring(input.indexOf("&#47;") + 5);
+            input = document;
+            int ix = input.indexOf('\'');
+            object = input.substring(0, ix);
+            //set more than one Object
+            if (document.indexOf("a href='") != -1) {
+                objectType = objectType.concat("s");
+                //targetendindex = input_target.indexOf('\'');
+                //object = input_target.substring(input_target.indexOf("&#47;") + 5, targetendindex);
+                object = objectType;
+                document = input.substring(input.indexOf("a href='") + 9);
+                ix = document.indexOf('\'');
+                objectURI = "http://www.dropbox.com/" + document.substring(0, ix);
+            }
+             //no target
+                target = "";
+                targetURI = "";
+                targetType = "";
+            }
+                
+            
         }
         Object o = new Object();
         Object t = new Object();
@@ -215,10 +257,10 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
         act.setActorURI("www.dropbox.com/"+actor);
         act.setActivityProviderURI("http://www.dropbox.com");
         a.setActor(act);
-        a.setDescription(actor + " " + action + " " + object + " " + target);
+        a.setDescription(actor + " " + action + " " + o.getObjectName() + " " +o.getObjectURI()+" "+o.getObjectTypeURI()+ " " + t.getObjectName()+ " " + t.getObjectURI()+" "+t.getObjectTypeURI() );
         a.setObject(o);
         a.setTarget(t);
-        logger.info(a.getActivityURI());
+        logger.info(a.getActivityURI()+" "+a.getCreationDate()+" "+a.getDescription());
 
         return a;
 
