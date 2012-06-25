@@ -152,7 +152,7 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
         } else {
             //set Actor and Action
             int index = 0;
-            while ((document.startsWith("left") | document.startsWith("joined") | document.startsWith("invited") | document.startsWith("added")) == false) {
+            while ((document.startsWith("left") | document.startsWith("joined") | document.startsWith("invited") | document.startsWith("added")| document.startsWith("deleted") | document.startsWith("removed") | document.startsWith("moved") | document.startsWith("renamed") | document.startsWith("edited")) == false) {
                 index++;
                 
                 document = input.substring(index);
@@ -208,9 +208,18 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
                 targetURI = "";
                 targetType = "";
             }
-            if (document.startsWith("added")){
+            if ((document.startsWith("added") | document.startsWith("deleted") | document.startsWith("removed") | document.startsWith("moved") | document.startsWith("renamed") | document.startsWith("edited"))==true){
                 //set object uri and object type
+                if (document.startsWith("deleted") | document.startsWith("removed")) {
+                action = "DELETE";
+            }
+            if (document.startsWith("added")) {
                 action = "ADD";
+            }
+            if (document.startsWith("moved") | document.startsWith("renamed") | document.startsWith("edited")) {
+                action = "UPDATE";
+            }
+                
             input = document.substring(document.indexOf('\'') + 1);
             objectURI = objectURI.concat(input.substring(0, input.indexOf('\'')));
             if (objectURI.startsWith("http://www.dropbox.comhttps")) {

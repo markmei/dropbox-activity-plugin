@@ -78,7 +78,7 @@ public class DropboxActivityPluginTest {
     
     @Test
     public void testMoreStreams(){
-        String feed = "";
+        String feed = "https://www.dropbox.com/13081712/20374930/96070ae/events.xml";
                 
         PluginConfiguration pc = new PluginConfiguration();
         
