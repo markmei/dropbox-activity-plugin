@@ -49,17 +49,37 @@ public class DropboxActivityPluginTest {
         p.setName("feed-url");
         p.setValue("C:/Users/XENEO/Documents/NetBeansProjects/AP_Dropbox/src/test/resources/testDropboxActivities.xml");
    
-        dap.setPluginConfiguration(pc);
-        dap.init();
+        dap.setPluginConfiguration(pc);        
 
     }
 
     @After
     public void tearDown() {
     }
+    
+    @Test
+    public void testOnlineStream() {
+        String feed = "https://www.dropbox.com/12598161/19626820/79d57c3/events.xml";
+        
+        PluginConfiguration pc = new PluginConfiguration();
+        
+        PluginProperty p = new PluginProperty();
+        p.setName("feed-url");
+        p.setValue(feed);
+        
+        pc.addProperty(p);
+   
+        dap.setPluginConfiguration(pc);
+        dap.init();
+        
+        dap.run();      
+        
+    }
 
     @Test
     public void testAssembleActivity() throws FileNotFoundException, IOException, IllegalArgumentException, FeedException {
+        
+        dap.init();
         
         SyndFeedInput input = new SyndFeedInput();
         SyndFeed sf = input.build(new XmlReader(DropboxActivityPluginTest.class.getResourceAsStream("/testDropboxActivities.xml")));

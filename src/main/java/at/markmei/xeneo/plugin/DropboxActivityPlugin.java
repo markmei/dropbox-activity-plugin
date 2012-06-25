@@ -5,8 +5,8 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,32 +33,39 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
     
 
     public void init() {
+
         PluginConfiguration pc = new PluginConfiguration();
         PluginProperty[] pps = pc.getProperties();   
+
+        logger.info("Dropbox Activity Plugin initializing...");
+        PluginProperty[] pps = getPluginProperties(); 
+        logger.info(pps.length + " Parameter available...");
         for (PluginProperty p : pps) {
             if (p.getName().equalsIgnoreCase("feed-url")) {
+                logger.info("Parameter feed-url is set to: " + p.getValue());
                 url = p.getValue();
             }
         }
     }    
 
     public List<Activity> getActivities() {
-        FileInputStream fis = null;
+
         List<Activity> acts = new ArrayList<Activity>();
+
+        logger.info("Dropbox Activity Plugin tries to retrive Activities...");        
+        List<Activity> acts = new ArrayList<Activity>();        
+
         try {
-            
-            fis = new FileInputStream(url);
+            URL feed = new URL(url);            
             
             SyndFeedInput input = new SyndFeedInput();
-            SyndFeed sf = input.build(new XmlReader(fis));
+            SyndFeed sf = input.build(new XmlReader(feed));
             List entries = sf.getEntries();
             Iterator it = entries.iterator();
             while (it.hasNext()) {
                 SyndEntry entry = (SyndEntry) it.next();
                 assembleActivity(entry);
-            }
-            
-            fis.close();
+            }           
             
         } catch (IOException ex) {
             logger.error("Stream with URL: "+ url +" is unloadable:" + ex.getMessage());
