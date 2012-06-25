@@ -31,9 +31,11 @@ public class DropboxActivityPlugin extends AbstractActivityPlugin {
 
     public void init() {
         logger.info("Dropbox Activity Plugin initializing...");
-        PluginProperty[] pps = getPluginProperties();        
+        PluginProperty[] pps = getPluginProperties(); 
+        logger.info(pps.length + " Parameter available...");
         for (PluginProperty p : pps) {
             if (p.getName().equalsIgnoreCase("feed-url")) {
+                logger.info("Parameter feed-url is set to: " + p.getValue());
                 url = p.getValue();
             }
         }

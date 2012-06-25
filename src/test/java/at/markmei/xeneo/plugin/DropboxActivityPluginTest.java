@@ -67,11 +67,13 @@ public class DropboxActivityPluginTest {
         PluginProperty p = new PluginProperty();
         p.setName("feed-url");
         p.setValue(feed);
+        
+        pc.addProperty(p);
    
         dap.setPluginConfiguration(pc);
         dap.init();
         
-        dap.run();
+        dap.run();      
         
     }
 
