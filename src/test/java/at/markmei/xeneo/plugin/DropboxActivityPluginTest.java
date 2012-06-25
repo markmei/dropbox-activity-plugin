@@ -49,8 +49,7 @@ public class DropboxActivityPluginTest {
         p.setName("feed-url");
         p.setValue("testDropboxActivities.xml");
    
-        dap.setPluginConfiguration(pc);
-        dap.init();
+        dap.setPluginConfiguration(pc);        
 
     }
 
@@ -79,6 +78,8 @@ public class DropboxActivityPluginTest {
 
     @Test
     public void testAssembleActivity() throws FileNotFoundException, IOException, IllegalArgumentException, FeedException {
+        
+        dap.init();
         
         SyndFeedInput input = new SyndFeedInput();
         SyndFeed sf = input.build(new XmlReader(DropboxActivityPluginTest.class.getResourceAsStream("/testDropboxActivities.xml")));
