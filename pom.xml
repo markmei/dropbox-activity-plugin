@@ -45,7 +45,15 @@
             <artifactId>slf4j-simple</artifactId>
             <version>1.6.5</version>
         </dependency>
-    </dependencies>    
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>xeneo-snap</id>
+            <url>http://www.wi.fh-kufstein.ac.at:40700/nexus/content/repositories/xeneo/</url>
+        </repository>
+    </repositories>
+    
     <distributionManagement>
         <snapshotRepository>
             <id>xeneo-snap</id>
